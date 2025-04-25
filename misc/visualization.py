@@ -64,6 +64,70 @@ def joints_dict():
                 [13, 7], [12, 7], [13, 14], [12, 11], [14, 15], [11, 10],
             ]
         },
+        "ntu60" : {
+            "keypoints": {
+                0: "base-spine",
+                1: "mid-spine",
+                2: "neck",
+                3: "head",
+                4: "left-shoulder",
+                5: "left-elbow",
+                6: "left-wrist",
+                7: "left-hand",
+                8: "right-shoulder",
+                9: "right-elbow",
+                10: "right-wrist",
+                11: "right-hand",
+                12: "left-hip",
+                13: "left-knee",
+                14: "left-ankle",
+                15: "left-foot",
+                16: "right-hip",
+                17: "right-knee",
+                18: "right-ankle",
+                19: "right-foot",
+                20: "spine",
+                21: "left-hand-tip",
+                22: "left-thumb",
+                23: "right-hand-tip",
+                24: "right-thumb"
+            },
+            "skeleton": [
+                [0, 1], [1, 20], [20, 2], [2, 3], 
+                [20, 8], [8, 9], [9, 10], [10, 11], [11, 23], [11, 24],
+                [20, 4], [4, 5], [5, 6], [6, 7], [7, 21], [7, 22], 
+                [0, 12], [12, 13], [13, 14], [14, 15],
+                [0, 16], [16, 17], [17, 18], [18, 19]
+            ]
+        },
+        "body15": {
+            "keypoints" : {
+                0: "nose",
+                1: "neck",
+                2: "right_shoulder",
+                3: "right_elbow",
+                4: "right_wrist",
+                5: "left_shoulder",
+                6: "left_elbow",
+                7: "left_wrist",
+                8: "mid-hip",
+                9: "right_hip",
+                10: "right_knee",
+                11: "right_ankle",
+                12: "left_hip",
+                13: "left_knee",
+                14: "left_ankle"
+
+            },
+            "skeleton" : [
+                [0, 1], [1, 2], [2, 3], [3, 4], 
+                [1, 5], [5, 6], [6, 7],
+                [1, 8], 
+                [8, 9], [9, 10], [10, 11], 
+                [8, 12], [12, 13], [13, 14]
+            ]
+
+        }
     }
     return joints
 
@@ -101,7 +165,7 @@ def draw_points(image, points, color_palette='tab20', palette_samples=16, confid
     # circle_size = max(2, int(np.sqrt(np.max(np.max(points, axis=0) - np.min(points, axis=0)) // 16)))
 
     for i, pt in enumerate(points):
-        if pt[2] > confidence_threshold:
+        #if pt[2] > confidence_threshold:
             image = cv2.circle(image, (int(pt[1]), int(pt[0])), circle_size, tuple(colors[i % len(colors)]), -1)
 
     return image
@@ -144,11 +208,11 @@ def draw_skeleton(image, points, skeleton, color_palette='Set2', palette_samples
 
     for i, joint in enumerate(skeleton):
         pt1, pt2 = points[joint]
-        if pt1[2] > confidence_threshold and pt2[2] > confidence_threshold:
-            image = cv2.line(
-                image, (int(pt1[1]), int(pt1[0])), (int(pt2[1]), int(pt2[0])),
-                tuple(colors[person_index % len(colors)]), 2
-            )
+        #if pt1[2] > confidence_threshold and pt2[2] > confidence_threshold:
+        image = cv2.line(
+            image, (int(pt1[1]), int(pt1[0])), (int(pt2[1]), int(pt2[0])),
+            tuple(colors[person_index % len(colors)]), 2
+        )
 
     return image
 
